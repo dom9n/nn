@@ -423,3 +423,124 @@ footer {
     animation-play-state: paused;
   }
 }
+
+
+/* ================= Мобильная версия ================= */
+/* Планшет и узкие окна */
+@media (max-width: 1000px) {
+  body {
+    width: calc(100% - 48px);
+  }
+  .site-title {
+    margin-left: 0;
+  }
+  .column {
+    margin: 8px;
+  }
+  .column h2 {
+    font-size: 19px;
+  }
+}
+
+/* Телефон */
+@media (max-width: 700px) {
+  body {
+    width: calc(100% - 32px);
+  }
+
+  /* Шапка в столбик: название, под ним меню */
+  header {
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px 0;
+  }
+  .site-title {
+    font-size: 22px;
+    text-align: center;
+    margin: 0;
+  }
+  nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+  nav li {
+    margin-right: 0;
+  }
+  nav a {
+    display: block;
+    padding: 6px 2px;               /* крупнее зона нажатия */
+  }
+
+  /* Слайдер на всю ширину, высота по ширине экрана */
+  .slider-container {
+    width: 100%;
+    height: 56vw;
+    min-height: 200px;
+    border-radius: 8px;
+  }
+  .prev-button, .next-button {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  .prev-button { left: 6px; }
+  .next-button { right: 6px; }
+  .slider-dots {
+    gap: 12px;
+    padding-top: 12px;
+  }
+
+  /* О нас */
+  .text_o_nas {
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .text_o_nas h1 {
+    font-size: 26px;
+  }
+
+  /* Экскурсии: карточки одна под другой */
+  .column-container {
+    flex-direction: column;
+  }
+  .column {
+    margin: 8px 0;
+  }
+  .column h2 {
+    font-size: 18px;
+  }
+  .pic {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Форма */
+  .obratnuj-zvonok {
+    max-width: 100%;
+  }
+  .form-zvonok {
+    padding: 0;
+  }
+  .form-zvonok input {
+    font-size: 16px;                /* иначе iPhone приближает страницу при вводе */
+  }
+
+  /* Полноэкранный просмотр */
+  #fullscreen-image {
+    max-width: 100%;
+  }
+  .close-button {
+    top: 8px;
+    right: 14px;
+    font-size: 36px;
+  }
+
+  #scrollToTopButton {
+    right: 12px;
+    bottom: 12px;
+  }
+}

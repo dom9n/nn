@@ -280,8 +280,29 @@ function stopAutoSlide() {
 showSlide(slideIndex);
 startAutoSlide();
 
-sliderContainer.addEventListener('mouseenter', stopAutoSlide);
-sliderContainer.addEventListener('mouseleave', startAutoSlide);
+// Пауза при наведении — только там, где есть мышь.
+// На телефоне касание вызывает mouseenter без mouseleave, и прокрутка бы залипла.
+if (window.matchMedia('(hover: hover)').matches) {
+    sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+    sliderContainer.addEventListener('mouseleave', startAutoSlide);
+}
+
+// Свайп пальцем по слайдеру — листать фото на телефоне
+let touchX = null, touchY = null;
+sliderContainer.addEventListener('touchstart', e => {
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+}, { passive: true });
+sliderContainer.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    touchX = touchY = null;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;   // это не свайп, а прокрутка страницы
+    if (dx < 0) showNextSlide(); else showPreviousSlide();
+    stopAutoSlide();
+    startAutoSlide();
+}, { passive: true });
 
 
 
