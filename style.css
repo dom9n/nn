@@ -280,6 +280,20 @@ footer {
   margin-right: 10px; /* Расстояние между иконками */
 }
 
+/* Значок ВК (встроенный SVG, не зависит от внешних картинок) */
+.social-icon svg {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.social-icon:hover svg {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 119, 255, 0.4);
+}
+
 
 /* Стили для иконок (размер и цвет) */
 .social-icon img {
