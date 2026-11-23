@@ -2,9 +2,11 @@
 // ---------- Слайдер ----------
 const sliderContainer = document.querySelector('.slider-container');
 const slider = document.querySelector('.slider');
+const prevButton = document.querySelector('.prev-button');
+const nextButton = document.querySelector('.next-button');
 const slides = Array.from(slider.querySelectorAll('img'));
 const slideCount = slides.length;
-const SLIDE_DELAY = 10000;           // смена картинки каждые 10 секунд
+const SLIDE_DELAY = 5000;            // смена картинки каждые 5 секунд
 let slideIndex = 0;
 let autoSlideInterval = null;
 
@@ -37,6 +39,9 @@ for (let i = 0; i < slideCount; i++) {
     dotsContainer.appendChild(dot);
 }
 
+function showPreviousSlide() {
+    goToSlide((slideIndex - 1 + slideCount) % slideCount);
+}
 function showNextSlide() {
     goToSlide((slideIndex + 1) % slideCount);
 }
@@ -80,7 +85,7 @@ sliderContainer.appendChild(canvas);
 const ctx = canvas.getContext('2d', { alpha: false });
 
 const TRANSITION_MS = 1900;
-const BG = '#2b1d14';
+const BG = '#ffc6c6';             // фон под частицами — цвет страницы
 
 // Слабое устройство: мало ядер, мало памяти или узкий экран телефона
 const isLowEnd =
@@ -250,6 +255,18 @@ function particleTransition(from, to) {
 window.addEventListener('resize', () => { if (finishCurrent) finishCurrent(); });
 
 
+// --- Кнопки ---
+prevButton.addEventListener('click', () => {
+    showPreviousSlide();
+    stopAutoSlide();
+    startAutoSlide();
+});
+nextButton.addEventListener('click', () => {
+    showNextSlide();
+    stopAutoSlide();
+    startAutoSlide();
+});
+
 // --- Автопрокрутка ---
 function startAutoSlide() {
     if (autoSlideInterval) return;
@@ -262,7 +279,18 @@ function stopAutoSlide() {
 
 showSlide(slideIndex);
 startAutoSlide();
-// Автопрокрутка не останавливается при наведении мыши
+
+sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+sliderContainer.addEventListener('mouseleave', startAutoSlide);
+
+
+
+
+
+
+
+
+
 
 
 function openFullscreenImage(element) {
@@ -285,8 +313,11 @@ window.onscroll = function() {
 
 
 function scrollFunction() {
-  const show = document.body.scrollTop > 20 || document.documentElement.scrollTop > 20;
-  document.getElementById('scrollToTopButton').classList.toggle('visible', show);
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById('scrollToTopButton').style.display = 'block';
+  } else {
+      document.getElementById('scrollToTopButton').style.display = 'none';
+  }
 }
 
 
@@ -297,5 +328,15 @@ document.getElementById('scrollToTopButton').addEventListener('click', function(
 
 
 function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollStep = -window.scrollY / 15;
+  const scrollInterval = setInterval(function() {
+      if (window.scrollY !== 0) {
+          window.scrollBy(0, scrollStep);
+      } else {
+          clearInterval(scrollInterval);
+      }
+  }, 15);
 }
+
+
+
